@@ -1,13 +1,13 @@
 import React from 'react';
 
 const BlockChain = ({ currentChain }) => {
-  const keys = Object.keys(currentChain);
-
   return (
     <div>
-      {keys.map((el, idx) => {
-        return <h1 key={idx}>{el}</h1>;
-      })}
+      {currentChain.length === undefined ? (
+        <pre>{JSON.stringify(currentChain, undefined, 2).replace(/[{",}]/g, '')}</pre>
+      ) : (
+        <h1 className='m-5 text-xl font-bold'>Nothing selected</h1>
+      )}
     </div>
   );
 };

@@ -1,16 +1,16 @@
-import logo from './logo.svg';
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import axios from 'axios';
+import './App.css';
+
+//Components
 import BlockChain from './components/BlockChain';
 
 function App() {
   const [data, setData] = useState([]);
   const [currentChain, setCurrentchain] = useState([]);
 
-  let folderUrl = 'https://api.github.com/repos/cosmos/chain-registry/contents';
-
   useEffect(() => {
+    let folderUrl = 'https://api.github.com/repos/cosmos/chain-registry/contents';
     axios.get(folderUrl).then((res) => {
       const result = res.data.filter((item) => item.type === 'dir' && item.name !== '.github');
       setData(result);
@@ -30,10 +30,12 @@ function App() {
 
   return (
     <div className='app'>
-      <header className='flex justify-between h-14 bg-gray-800'>
-        <h1 className='text-white'>Chain Registry</h1>
+      <header className='flex items-center justify-between px-20 bg-gray-800 h-14'>
+        <h1 className='text-xl font-bold tracking-wider text-white'>Chain Registry</h1>
         <div>
-          <label htmlFor='blockchains'>Select Blockchains</label>
+          <label htmlFor='blockchains' className='mr-4 font-bold text-white'>
+            Select Blockchains
+          </label>
           <select id='blockchains' onChange={handleChange}>
             {data.map((chain) => {
               return (
