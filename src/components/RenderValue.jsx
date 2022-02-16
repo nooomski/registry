@@ -1,7 +1,6 @@
 import React from 'react';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-import copyIcon from '../copyicon.png';
+// Components
 import DataBlock from './DataBlock';
 
 const RenderValue = ({ subChainData }) => {

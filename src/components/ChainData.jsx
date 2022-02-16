@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import React from 'react';
 
 //Components
 import RenderValue from './RenderValue';
 
-const hoverCopyIcon = () => {
+/* const hoverCopyIcon = () => {
   return (
     <div id="copyIcon">
       Hovering right meow!
@@ -13,7 +12,7 @@ const hoverCopyIcon = () => {
       </span>
     </div>
   );
-};
+}; */
 
 const ChainData = ({ currentChainData }) => {
   const keys = Object.keys(currentChainData);
@@ -21,10 +20,10 @@ const ChainData = ({ currentChainData }) => {
 
   return (
     <div>
-      {keys.map((el, idx) => {
+      {/* {keys.map((el, idx) => {
         console.log(idx + " " + String(el) + ": " + String(currentChainData[el]));
         //return <h1 key={idx}>{el}: {String(currentChainData[el])}</h1>;
-      })}
+      })} */}
 
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto">
