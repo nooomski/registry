@@ -16,7 +16,7 @@ function App() {
     let folderUrl = 'https://api.github.com/repos/cosmos/chain-registry/contents';
     axios.get(folderUrl).then((res) => {
       // Filter only relevant
-      const result = res.data.filter((item) => item.type === 'dir' && item.name !== '.github');
+      const result = res.data.filter((item) => item.type === 'dir' && item.name !== '.github' && item.name !== 'testnets');
       setData(result);
     });
     
@@ -41,18 +41,18 @@ function App() {
   }
 
   const addToKeplr = e => {
-
+    //
   }
   
   return (
-    <div className='app bg-gray-700'>
-      <header className='flex items-center justify-between px-5 bg-gray-800 h-14'>
-        <h1 className='text-xl font-bold tracking-wider text-gray-100'>Chain Registry</h1>
+    <div className='app bg-gray-700 transition-all ease-in-out duration-300'>
+      <header className='sticky z-10 top-0 flex items-center justify-between px-5 bg-gray-800 h-14 shadow-lg' >
+        <h1 className='text-xl font-bold tracking-wider text-gray-100'>Cosmos Chain Registry</h1>
         <div>
           <label htmlFor='blockchains' className='mr-4 font-bold text-gray-100'>
             Select Chain:
           </label>
-          <select className='capitalize' id='blockchains' onChange={fetchChainData} value={currentChain}>
+          <select className='capitalize bg-gray-300' id='blockchains' onChange={fetchChainData} value={currentChain}>
             {data.map((chain) => {
               return (
                 <option key={chain.name} value={chain.name}>
