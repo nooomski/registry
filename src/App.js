@@ -4,10 +4,12 @@ import './App.css';
 
 //Components
 import ChainData from './components/ChainData';
+import AddToKeplr from './components/AddToKeplr';
 
 function App() {
   const [data, setData] = useState([]);
   const [currentChainData, setCurrentChainData] = useState([]);
+  const [currentAssetData, setCurrentAssetData] = useState([]);
   const defaultChain = "cosmoshub";
   const [currentChain, setCurrentChain] = useState(defaultChain);
 
@@ -38,10 +40,16 @@ function App() {
       setCurrentChain(result.chain_name);
       setCurrentChainData(result);
     });
-  }
 
-  const addToKeplr = e => {
-    //
+    fieldUrl =
+      'https://cdn.jsdelivr.net/gh/cosmos/chain-registry@master/' + v + '/assetlist.json';
+
+    // Get chain.json file and filter out irrelevant data
+    axios.get(fieldUrl).then((res) => {
+      let result = { ...res.data };
+      delete result.$schema;
+      setCurrentAssetData(result);
+    });
   }
   
   return (
@@ -62,7 +70,7 @@ function App() {
             })}
 
           </select>
-          <button className='bg-gray-600 hover:bg-gray-700 text-gray-100 font-bold py-1 px-4 ml-4 rounded' id='keplrAdd' onClick={addToKeplr}>Add to Keplr</button>
+          <AddToKeplr currentChainData={currentChainData} currentAssetData={currentAssetData}/>
         </div>
       </header>
       <ChainData currentChainData={currentChainData} />

@@ -16,7 +16,6 @@ import RenderValue from './RenderValue';
 
 const ChainData = ({ currentChainData }) => {
   const keys = Object.keys(currentChainData);
-  let val;
 
   return (
     <div>
@@ -33,12 +32,14 @@ const ChainData = ({ currentChainData }) => {
                 <thead className="bg-gray-700">
                   <tr>
                     <th
+                      key="field"
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
                     >
                       Field
                     </th>
                     <th
+                      key="value"
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
                     >

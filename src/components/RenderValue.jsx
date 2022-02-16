@@ -38,8 +38,8 @@ const RenderValue = ({ subChainData }) => {
           <div className="px-2 mb-1 mt-5">Binaries:</div>
           {(subChainData.binaries) ? (
             <DataBlock data=
-              {Object.keys(subChainData.binaries).map((el) => (
-                <div>{el}:&nbsp;
+              {Object.keys(subChainData.binaries).map((el, idx) => (
+                <div key={idx}>{el}:&nbsp;
                   <a href={String(subChainData.binaries[el])} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
                     {String(subChainData.binaries[el])}
                   </a>
@@ -57,9 +57,9 @@ const RenderValue = ({ subChainData }) => {
           <div className="px-2 mb-1">Seeds:</div>
           {(subChainData.seeds) ? (
             <DataBlock data=
-              {Object.keys(subChainData.seeds).map((el, i, ar) => (
-                <div className="inline-block">
-                  {String(subChainData.seeds[el].address)}{(i + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+              {Object.keys(subChainData.seeds).map((el, idx, ar) => (
+                <div key={idx} className="inline-block">
+                  {String(subChainData.seeds[el].address)}{(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
                 </div>
               ))}
             />
@@ -69,9 +69,9 @@ const RenderValue = ({ subChainData }) => {
           <div className="px-2 mb-1 mt-5">Persistent Peers:</div>
           {(subChainData.persistent_peers) ? (
             <DataBlock data=
-              {Object.keys(subChainData.persistent_peers).map((el, i, ar) => (
-                <div className="inline-block">
-                  {String(subChainData.persistent_peers[el].address)}{(i + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+              {Object.keys(subChainData.persistent_peers).map((el, idx, ar) => (
+                <div key={idx} className="inline-block">
+                  {String(subChainData.persistent_peers[el].address)}{(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
                 </div>
               ))}
             />
@@ -86,12 +86,12 @@ const RenderValue = ({ subChainData }) => {
             <div className="px-2 mb-1">RPC:</div>
             {(subChainData.rpc) ? (
               <DataBlock data=
-                {Object.keys(subChainData.rpc).map((el, i, ar) => (
-                  <div className="inline-block">
+                {Object.keys(subChainData.rpc).map((el, idx, ar) => (
+                  <div key={idx} className="inline-block">
                     <a href={String(subChainData.rpc[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
                       {String(subChainData.rpc[el].address)}
                     </a>
-                    {(i + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+                    {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
                   </div>
                 ))}
               />
@@ -101,12 +101,12 @@ const RenderValue = ({ subChainData }) => {
             <div className="px-2 mb-1 mt-5">REST:</div>
             {(subChainData.rest) ? (
               <DataBlock data=
-                {Object.keys(subChainData.rest).map((el, i, ar) => (
-                  <div className="inline-block">
+                {Object.keys(subChainData.rest).map((el, idx, ar) => (
+                  <div key={idx} className="inline-block">
                     <a href={String(subChainData.rest[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
                       {String(subChainData.rest[el].address)}
                     </a>
-                    {(i + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+                    {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
                   </div>
                 ))}
               />
@@ -116,12 +116,12 @@ const RenderValue = ({ subChainData }) => {
              <div className="px-2 mb-1 mt-5">gRPC:</div>
             {(subChainData.grpc) ? (
               <DataBlock data=
-                {Object.keys(subChainData.grpc).map((el, i, ar) => (
-                  <div className="inline-block">
+                {Object.keys(subChainData.grpc).map((el, idx, ar) => (
+                  <div key={idx} className="inline-block">
                     <a href={String(subChainData.grpc[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
                       {String(subChainData.grpc[el].address)}
                     </a>
-                    {(i + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+                    {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
                   </div>
                 ))}
               />
@@ -133,13 +133,13 @@ const RenderValue = ({ subChainData }) => {
     case ((/^kind|tx_page/).test(val)):
       return (
         <div className="capitalize">
-          {Object.keys(subChainData).map((el, i, ar) => (
-            <div className="inline-block">
+          {Object.keys(subChainData).map((el, idx, ar) => (
+            <div key={idx} className="inline-block">
               <div>
                 <a href={String(subChainData[el].url)} target="_blank" rel="noreferrer" className="hover:text-emerald-200 hover:underline">
                   {String(subChainData[el].kind)}
                 </a>
-                {(i + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+                {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
               </div>
             </div>
           ))}
