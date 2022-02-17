@@ -19,6 +19,23 @@ const RenderValue = ({ subChainData }) => {
         </div>
       );
     
+    // Parse fee token & min gas price
+    case ((/^fee_tokens/).test(val)):
+      return (
+        <div>
+          {(subChainData.fee_tokens[0].denom !== undefined) ? (
+            <div>Token: {subChainData.fee_tokens[0].denom}</div>
+          ) : (
+            <div>Token: not specified</div>
+          )}
+           {(subChainData.fee_tokens[0].fixed_min_gas_price !== undefined) ? (
+            <div>Fixed Minimum Gas Price: {subChainData.fee_tokens[0].fixed_min_gas_price}</div>
+          ) : (
+            <div>Fixed Minimum Gas Price: not specified</div>
+          )}
+        </div>
+      );
+    
     // Genesis URL link
     case ((/^genesis_url/).test(val)):
       return (
@@ -34,7 +51,7 @@ const RenderValue = ({ subChainData }) => {
       return (
         <div>
           <div className="px-2 mb-1">GitHub Repo:</div>
-          {(subChainData.git_repo) ? (
+          {(subChainData.git_repo !== undefined) ? (
             <DataBlock data={(
               <a href={subChainData.git_repo} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
                 {subChainData.git_repo}
@@ -44,7 +61,7 @@ const RenderValue = ({ subChainData }) => {
             <DataBlock data="not listed" />
           )}
           <div className="px-2 mb-1 mt-5">Binaries:</div>
-          {(subChainData.binaries) ? (
+          {(subChainData.binaries !== undefined) ? (
             <DataBlock data=
               {Object.keys(subChainData.binaries).map((el, idx) => (
                 <div key={idx}>{el}:&nbsp;
@@ -65,7 +82,7 @@ const RenderValue = ({ subChainData }) => {
       return (
         <div>
           <div className="px-2 mb-1">Seeds:</div>
-          {(subChainData.seeds) ? (
+          {(subChainData.seeds !== undefined) ? (
             <DataBlock data=
               {Object.keys(subChainData.seeds).map((el, idx, ar) => (
                 <div key={idx} className="inline-block">
@@ -77,7 +94,7 @@ const RenderValue = ({ subChainData }) => {
             <DataBlock data="none listed" />
           )}
           <div className="px-2 mb-1 mt-5">Persistent Peers:</div>
-          {(subChainData.persistent_peers) ? (
+          {(subChainData.persistent_peers !== undefined) ? (
             <DataBlock data=
               {Object.keys(subChainData.persistent_peers).map((el, idx, ar) => (
                 <div key={idx} className="inline-block">
@@ -96,7 +113,7 @@ const RenderValue = ({ subChainData }) => {
       return (
         <div>
           <div className="px-2 mb-1">RPC:</div>
-          {(subChainData.rpc) ? (
+          {(subChainData.rpc !== undefined) ? (
             <DataBlock data=
               {Object.keys(subChainData.rpc).map((el, idx, ar) => (
                 <div key={idx} className="inline-block">
@@ -111,7 +128,7 @@ const RenderValue = ({ subChainData }) => {
             <DataBlock data="none listed" />
           )}
           <div className="px-2 mb-1 mt-5">REST:</div>
-          {(subChainData.rest) ? (
+          {(subChainData.rest !== undefined) ? (
             <DataBlock data=
               {Object.keys(subChainData.rest).map((el, idx, ar) => (
                 <div key={idx} className="inline-block">
@@ -126,7 +143,7 @@ const RenderValue = ({ subChainData }) => {
             <DataBlock data="none listed" />
           )}
             <div className="px-2 mb-1 mt-5">gRPC:</div>
-          {(subChainData.grpc) ? (
+          {(subChainData.grpc !== undefined) ? (
             <DataBlock data=
               {Object.keys(subChainData.grpc).map((el, idx, ar) => (
                 <div key={idx} className="inline-block">

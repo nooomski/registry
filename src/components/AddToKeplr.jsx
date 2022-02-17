@@ -9,7 +9,7 @@ const AddToKeplr = ({ currentChainData, currentAssetData }) => {
             // Create the chain object file for Keplr and pull the data from chain.json
             var obj = {};
             obj.chainId = currentChainData.chain_id;
-            obj.chainName = currentChainData.chain_name;
+            obj.chainName = currentChainData.pretty_name;
             obj.rpc = currentChainData.apis.rpc[0].address;
             obj.rest = currentChainData.apis.rest[0].address;
             obj.bip44 = {};
@@ -54,7 +54,7 @@ const AddToKeplr = ({ currentChainData, currentAssetData }) => {
             // This is also missing from the registry
             obj.features = [];
 
-            console.log("chain obj created")
+            //console.log("chain obj created")
         }
         catch (err) {
             console.log(err.message);
