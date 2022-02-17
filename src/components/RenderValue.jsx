@@ -4,9 +4,13 @@ import React from 'react';
 import DataBlock from './DataBlock';
 
 const RenderValue = ({ subChainData }) => {
+  // Convert subfield to string
   let val = JSON.stringify(subChainData).replace(/[{",}]/g, '')
 
+  // Generate different output layout based on the value
   switch(true) {
+
+    // Create little icon for Live chains
     case (val === 'live'):
       return (
         <div className="capitalize">
@@ -14,6 +18,8 @@ const RenderValue = ({ subChainData }) => {
              <span className="mx-1 relative inline-flex rounded-full h-3 w-3 bg-emerald-500"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span></span>
         </div>
       );
+    
+    // Genesis URL link
     case ((/^genesis_url/).test(val)):
       return (
         <DataBlock data={(
@@ -22,6 +28,8 @@ const RenderValue = ({ subChainData }) => {
           </a>
         )}/>
       );
+    
+    // Split Repo & Binaries into two sections with links.
     case ((/^git_repo|binaries/).test(val)):
       return (
         <div>
@@ -51,6 +59,8 @@ const RenderValue = ({ subChainData }) => {
           )}
         </div>
       );
+    
+    // Split Peers into two sections, comma seperated
     case ((/^seeds|persistent_peers/).test(val)):
       return (
         <div>
@@ -80,56 +90,60 @@ const RenderValue = ({ subChainData }) => {
           )}
         </div>
       );
-      case ((/^rpc|rest|grpc/).test(val)):
-        return (
-          <div>
-            <div className="px-2 mb-1">RPC:</div>
-            {(subChainData.rpc) ? (
-              <DataBlock data=
-                {Object.keys(subChainData.rpc).map((el, idx, ar) => (
-                  <div key={idx} className="inline-block">
-                    <a href={String(subChainData.rpc[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
-                      {String(subChainData.rpc[el].address)}
-                    </a>
-                    {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
-                  </div>
-                ))}
-              />
-            ) : (
-              <DataBlock data="none listed" />
-            )}
-            <div className="px-2 mb-1 mt-5">REST:</div>
-            {(subChainData.rest) ? (
-              <DataBlock data=
-                {Object.keys(subChainData.rest).map((el, idx, ar) => (
-                  <div key={idx} className="inline-block">
-                    <a href={String(subChainData.rest[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
-                      {String(subChainData.rest[el].address)}
-                    </a>
-                    {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
-                  </div>
-                ))}
-              />
-            ) : (
-              <DataBlock data="none listed" />
-            )}
-             <div className="px-2 mb-1 mt-5">gRPC:</div>
-            {(subChainData.grpc) ? (
-              <DataBlock data=
-                {Object.keys(subChainData.grpc).map((el, idx, ar) => (
-                  <div key={idx} className="inline-block">
-                    <a href={String(subChainData.grpc[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
-                      {String(subChainData.grpc[el].address)}
-                    </a>
-                    {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
-                  </div>
-                ))}
-              />
-            ) : (
-              <DataBlock data="none listed" />
-            )}
-          </div>
-        );
+
+    // Split APIs into three sections, with links, comma seperated
+    case ((/^rpc|rest|grpc/).test(val)):
+      return (
+        <div>
+          <div className="px-2 mb-1">RPC:</div>
+          {(subChainData.rpc) ? (
+            <DataBlock data=
+              {Object.keys(subChainData.rpc).map((el, idx, ar) => (
+                <div key={idx} className="inline-block">
+                  <a href={String(subChainData.rpc[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
+                    {String(subChainData.rpc[el].address)}
+                  </a>
+                  {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+                </div>
+              ))}
+            />
+          ) : (
+            <DataBlock data="none listed" />
+          )}
+          <div className="px-2 mb-1 mt-5">REST:</div>
+          {(subChainData.rest) ? (
+            <DataBlock data=
+              {Object.keys(subChainData.rest).map((el, idx, ar) => (
+                <div key={idx} className="inline-block">
+                  <a href={String(subChainData.rest[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
+                    {String(subChainData.rest[el].address)}
+                  </a>
+                  {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+                </div>
+              ))}
+            />
+          ) : (
+            <DataBlock data="none listed" />
+          )}
+            <div className="px-2 mb-1 mt-5">gRPC:</div>
+          {(subChainData.grpc) ? (
+            <DataBlock data=
+              {Object.keys(subChainData.grpc).map((el, idx, ar) => (
+                <div key={idx} className="inline-block">
+                  <a href={String(subChainData.grpc[el].address)} target="_blank" rel="noreferrer" className="hover:bg-emerald-800">
+                    {String(subChainData.grpc[el].address)}
+                  </a>
+                  {(idx + 1 === ar.length) ? (<span>&nbsp;</span>) : (<span>,&nbsp;</span>)}
+                </div>
+              ))}
+            />
+          ) : (
+            <DataBlock data="none listed" />
+          )}
+        </div>
+      );
+    
+    // Print names of each explorer with a link to the main page
     case ((/^kind|tx_page/).test(val)):
       return (
         <div className="capitalize">
@@ -145,6 +159,8 @@ const RenderValue = ({ subChainData }) => {
           ))}
         </div>
       );
+
+    // Just print the stringified value as a default
     default:
       return (
         <div>

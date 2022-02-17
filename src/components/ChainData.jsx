@@ -3,29 +3,15 @@ import React from 'react';
 //Components
 import RenderValue from './RenderValue';
 
-/* const hoverCopyIcon = () => {
-  return (
-    <div id="copyIcon">
-      Hovering right meow!
-      <span role="img" aria-label="cat">
-        🐱
-      </span>
-    </div>
-  );
-}; */
-
 const ChainData = ({ currentChainData }) => {
   const keys = Object.keys(currentChainData);
 
+  // Create some rows and loop over all elements in chain.json and 
+  // create a RenderValue component to display the contents.
   return (
     <div>
-      {/* {keys.map((el, idx) => {
-        console.log(idx + " " + String(el) + ": " + String(currentChainData[el]));
-        //return <h1 key={idx}>{el}: {String(currentChainData[el])}</h1>;
-      })} */}
-
       <div className="flex flex-col">
-        <div className="-my-2 overflow-x-auto">
+        <div className=" overflow-x-auto">
           <div className="py-2 align-middle inline-block min-w-full">
             <div className="shadow overflow-hidden border-b border-gray-900">
               <table className="min-w-full divide-y divide-gray-900">
@@ -66,16 +52,6 @@ const ChainData = ({ currentChainData }) => {
       </div>
     </div>
   );
-  
-  /* return (
-    <div>
-      {currentChainData.length === undefined ? (
-        <pre>{JSON.stringify(currentChainData, undefined, 2).replace(/[{",}]/g, '')}</pre>
-      ) : (
-        <h1 className='m-5 text-xl font-bold'>Nothing selected</h1>
-      )}
-    </div>
-  ); */
 };
 
 export default ChainData;
