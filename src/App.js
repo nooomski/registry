@@ -10,18 +10,27 @@ import AddToKeplr from './components/AddToKeplr';
 
 function App() {
   const [chainList, setData] = useState([]);
+  const [testChainList, setTestData] = useState([]);
   const [currentChainData, setCurrentChainData] = useState([]);
   const [currentAssetData, setCurrentAssetData] = useState([]);
   const defaultChain = "cosmoshub";
   const [currentChain, setCurrentChain] = useState(defaultChain);
 
   useEffect(() => {
-    // Get folder structure from repo
+    // Get mainnet folder structure from repo
     let folderUrl = 'https://api.github.com/repos/cosmos/chain-registry/contents';
     axios.get(folderUrl).then((res) => {
       // Filter only relevant
-      const result = res.data.filter((item) => item.type === 'dir' && item.name !== '.github' && item.name !== 'testnets');
+      let result = res.data.filter((item) => item.type === 'dir' && item.name !== '.github' && item.name !== 'testnets');
       setData(result);
+    });
+
+    // Get testnet folder structure from repo
+    folderUrl = 'https://api.github.com/repos/cosmos/chain-registry/contents/testnets';
+    axios.get(folderUrl).then((res) => {
+      // Filter only relevant
+      let result = res.data.filter((item) => item.type === 'dir' && item.name !== '.github');
+      setTestData(result);
     });
     
     // Fetch the first chain
@@ -34,25 +43,33 @@ function App() {
     // Set v to selected chainname or to default in case this function 
     // is called somewhere else (at start).
     let v = (e) ? e.target.value : defaultChain;
-
+    
+    let networkType = "Mainnet";
+    if (e) {
+      networkType = e.target.options[e.target.selectedIndex].closest('optgroup').label;
+    }
     // Set URL for chain.json
-    let fieldUrl =
-      'https://cdn.jsdelivr.net/gh/cosmos/chain-registry@master/' + v + '/chain.json';
-
+    let chainUrl;
+    let assetUrl;
+    if (networkType === "Testnet") {
+      chainUrl = 'https://cdn.jsdelivr.net/gh/cosmos/chain-registry@master/testnets/' + v + '/chain.json';
+      assetUrl = 'https://cdn.jsdelivr.net/gh/cosmos/chain-registry@master/testnets/' + v + '/assetlist.json';
+    }
+    else {
+      chainUrl = 'https://cdn.jsdelivr.net/gh/cosmos/chain-registry@master/' + v + '/chain.json';
+      assetUrl = 'https://cdn.jsdelivr.net/gh/cosmos/chain-registry@master/' + v + '/assetlist.json';
+    }
+    
     // Get chain.json file and filter out irrelevant data
-    axios.get(fieldUrl).then((res) => {
+    axios.get(chainUrl).then((res) => {
       let result = { ...res.data };
       delete result.$schema;
       setCurrentChain(result.chain_name);
       setCurrentChainData(result);
     });
 
-    // Set url for assetlist.json
-    fieldUrl =
-      'https://cdn.jsdelivr.net/gh/cosmos/chain-registry@master/' + v + '/assetlist.json';
-
     // Get chain.json file and filter out irrelevant data
-    axios.get(fieldUrl).then((res) => {
+    axios.get(assetUrl).then((res) => {
       let result = { ...res.data };
       delete result.$schema;
       setCurrentAssetData(result);
@@ -72,14 +89,24 @@ function App() {
           </div>
           <div className="py-1">
             <select className='capitalize bg-gray-100 font-bold py-1 px-2 rounded hover:bg-white' id='blockchains' onChange={fetchChainData} value={currentChain}>
-              {chainList.map((chain) => {
-                return (
-                  <option key={chain.name} value={chain.name}>
-                    {chain.name}
-                  </option>
-                  );
-              })}
-
+              <optgroup label="Mainnet">
+                {chainList.map((chain) => {
+                  return (
+                    <option key={chain.name} value={chain.name}>
+                      {chain.name}
+                    </option>
+                    );
+                })}
+              </optgroup>
+              <optgroup label="Testnet">
+                {testChainList.map((chain) => {
+                  return (
+                    <option key={chain.name} value={chain.name}>
+                      {chain.name}
+                    </option>
+                    );
+                })}
+              </optgroup>
             </select>
             <AddToKeplr currentChainData={currentChainData} currentAssetData={currentAssetData}/>
           </div>
