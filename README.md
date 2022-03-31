@@ -1,6 +1,7 @@
 # Chain Registry
 
 Web UI built in React to pull and display blockchain metadata from the Cosmos [Chain Registry](https://github.com/cosmos/chain-registry)
+
 A live deployment is available here: https://chain-registry.netlify.app/
 
 ## Instructions
